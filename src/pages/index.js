@@ -5,7 +5,7 @@ import Timers from "../components/Timers"
 class Index extends React.Component {
     render() {
         return (
-            <Layout title="Timers">
+            <Layout title="Cronos">
                 <Timers />
             </Layout>
         )

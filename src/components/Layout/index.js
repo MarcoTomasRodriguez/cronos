@@ -14,7 +14,7 @@ class Layout extends React.Component {
                 <header className="text-white bg-indigo-600 p-4 text-center">
                     <Link href="/">
                         <a className="text-white font-bold">
-                            Timers
+                            Cronos
                         </a>
                     </Link>
                 </header>
