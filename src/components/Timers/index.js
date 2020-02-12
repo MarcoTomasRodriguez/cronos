@@ -5,7 +5,7 @@ class Timers extends React.Component {
     render() {
         const { timers } = this.props
         return (
-            <div className="p-5 bg-gray-300 min-h-screen">
+            <div className="p-5 min-h-full">
                 <div className="flex flex-wrap -m-2">
                     {
                         timers.map((timer) => (
