@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "next",
+    "dev": "next dev --port $PORT",
     "build": "next build",
-    "start": "next start"
+    "start": "next start --port $PORT"
   },
   "keywords": [],
   "author": "",
