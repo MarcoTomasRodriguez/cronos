@@ -1,6 +1,6 @@
 class MenuTimer extends React.Component {
     render() {
-        const { toggleMenu, toggleCountdown, restartCountdown, running } = this.props
+        const { toggleMenu, toggleCountdown, toggleEdit, restartCountdown, running } = this.props
 
         return (
             <div className="w-full h-full">
@@ -13,7 +13,8 @@ class MenuTimer extends React.Component {
                     onClick={() => { restartCountdown(); toggleMenu(); }}>
                     <img className="block m-auto" src="/icons/restart.svg" />
                 </button>
-                <button className="bg-white hover:bg-gray-200 text-gray-800 font-bold rounded overflow-hidden inline-flex items-center h-full w-1/4">
+                <button className="bg-white hover:bg-gray-200 text-gray-800 font-bold rounded overflow-hidden inline-flex items-center h-full w-1/4"
+                    onClick={() => { toggleMenu(); toggleEdit(); }}>
                     <img className="block m-auto" src="/icons/edit.svg" />
                 </button>
                 <button className="bg-white hover:bg-gray-200 text-gray-800 font-bold rounded overflow-hidden inline-flex items-center h-full w-1/4"

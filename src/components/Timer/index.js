@@ -1,5 +1,6 @@
 import DisplayTimer from "./Display"
 import MenuTimer from "./Menu"
+import EditTimer from "./Edit"
 
 class Timer extends React.Component {
 
@@ -8,8 +9,8 @@ class Timer extends React.Component {
         edit: false,
         running: false,
         title: "Pizza",
-        currentTimer: 10,
-        lastTimer: 10
+        currentTimer: 3701,
+        lastTimer: 3701
     }
 
     componentDidMount() {
@@ -49,6 +50,12 @@ class Timer extends React.Component {
                 return number
         }
     }
+
+    getHours = (time) => Math.floor(time / 3600)
+
+    getMinutes = (time) => Math.floor((time % 3600) / 60)
+
+    getSeconds = (time) => Math.floor(time % 60)
 
     zeroPad = (number, pad) => String(number).padStart(pad, '0')
 
@@ -97,30 +104,35 @@ class Timer extends React.Component {
 
     toggleMenu = () => this.setState({ menu: !this.state.menu })
 
+    toggleEdit = () => this.setState({ edit: !this.state.edit })
+
     render() {
         return (
             <div className="bg-gray-100 h-20 rounded overflow-hidden shadow-lg">
                 <div className="h-full relative">
-                    { !this.state.menu && 
-                        <div className="absolute top-0 right-0">
-                            <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-1 px-1 rounded inline-flex items-center"
-                                onClick={this.toggleMenu}>
-                                    <img src="/icons/more_vert.svg" />
-                            </button>
-                        </div>
-                    }
-                    { !this.state.menu && 
+                    { !this.state.menu && !this.state.edit && 
                         <DisplayTimer 
                             title={this.state.title} 
                             timer={this.stringifyTime(this.state.currentTimer)}
+                            toggleMenu={this.toggleMenu}
                         />
                     }
                     { this.state.menu && 
                         <MenuTimer 
                             toggleMenu={this.toggleMenu} 
-                            toggleCountdown={this.toggleCountdown} 
+                            toggleEdit={this.toggleEdit}
+                            toggleCountdown={this.toggleCountdown}
                             restartCountdown={this.restartCountdown}
                             running={this.state.running}
+                        />
+                    }
+                    { this.state.edit &&
+                        <EditTimer
+                            toggleEdit={this.toggleEdit}
+                            title={this.state.title}
+                            hours={this.getHours(this.state.lastTimer)}
+                            minutes={this.getMinutes(this.state.lastTimer)}
+                            seconds={this.getSeconds(this.state.lastTimer)}
                         />
                     }
                 </div>
