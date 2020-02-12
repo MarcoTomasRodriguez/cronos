@@ -1,33 +1,9 @@
 import DisplayTimer from "./Display"
 import MenuTimer from "./Menu"
 import EditTimer from "./Edit"
+import { connect } from "react-redux"
 
 class Timer extends React.Component {
-
-    state = {
-        menu: false,
-        edit: false,
-        running: false,
-        title: "Pizza",
-        currentTimer: 3701,
-        lastTimer: 3701
-    }
-
-    componentDidMount() {
-        this.intervalId = setInterval(() => {
-            if (this.state.running) {
-                if (this.state.currentTimer > 0) {
-                    this.setState({ currentTimer: this.state.currentTimer - 1 })
-                } else {
-                    this.setState({ running: false })
-                }
-            }
-        }, 1000)
-    }
-
-    componentWillUnmount() {
-        clearInterval(this.intervalId)
-    }
 
     getSexagesimal = (number, position) => {
         switch (position) {
@@ -96,43 +72,70 @@ class Timer extends React.Component {
     }
 
     restartCountdown = () => {
-        this.setState({ currentTimer: this.state.lastTimer })
-        this.setState({ running: true })
+        const { timer } = this.props
+        this.props.timerRestart(timer)
     }
 
-    toggleCountdown = () => this.setState({ running: !this.state.running })
+    toggleCountdown = () => {
+        const { timer } = this.props
+        this.props.timerToggle(timer)
+    }
 
-    toggleMenu = () => this.setState({ menu: !this.state.menu })
+    editCountdown = ({ title = "", hours = 0, minutes = 0, seconds = 0 }) => {
+        const { timer } = this.props
+        if (title !== "") {
+            const countdown = (hours * 3600) + (minutes * 60) + seconds
+            this.props.timerUpdate({
+                id: timer.id,
+                title,
+                currentTimer: countdown,
+                lastTimer: countdown,
+            })
+            this.props.timerStop(timer)
+            this.props.timerUIToggleEdit(timer)
+        } else {
+            this.props.timerDelete(timer)
+        }
+    }
 
-    toggleEdit = () => this.setState({ edit: !this.state.edit })
+    toggleMenu = () => {
+        const { timer } = this.props
+        this.props.timerUIToggleMenu(timer)
+    }
+
+    toggleEdit = () => {
+        const { timer } = this.props
+        this.props.timerUIToggleEdit(timer)
+    }
 
     render() {
+        const { timer } = this.props
         return (
             <div className="bg-gray-100 h-20 rounded overflow-hidden shadow-lg">
                 <div className="h-full relative">
-                    { !this.state.menu && !this.state.edit && 
+                    { !timer.menu && !timer.edit && 
                         <DisplayTimer 
-                            title={this.state.title} 
-                            timer={this.stringifyTime(this.state.currentTimer)}
+                            title={timer.title}
+                            timer={this.stringifyTime(timer.currentTimer)}
                             toggleMenu={this.toggleMenu}
                         />
                     }
-                    { this.state.menu && 
+                    { timer.menu && 
                         <MenuTimer 
                             toggleMenu={this.toggleMenu} 
                             toggleEdit={this.toggleEdit}
                             toggleCountdown={this.toggleCountdown}
                             restartCountdown={this.restartCountdown}
-                            running={this.state.running}
+                            running={timer.running}
                         />
                     }
-                    { this.state.edit &&
+                    { timer.edit &&
                         <EditTimer
-                            toggleEdit={this.toggleEdit}
-                            title={this.state.title}
-                            hours={this.getHours(this.state.lastTimer)}
-                            minutes={this.getMinutes(this.state.lastTimer)}
-                            seconds={this.getSeconds(this.state.lastTimer)}
+                            editCountdown={this.editCountdown}
+                            title={timer.title}
+                            hours={this.getHours(timer.lastTimer)}
+                            minutes={this.getMinutes(timer.lastTimer)}
+                            seconds={this.getSeconds(timer.lastTimer)}
                         />
                     }
                 </div>
@@ -141,4 +144,16 @@ class Timer extends React.Component {
     }
 }
 
-export default Timer
+export default connect(
+    state => ({  }), 
+    dispatch => ({
+        timerDelete: (payload) => dispatch({ type: "TIMER_DELETE", payload }),
+        timerRestart: (payload) => dispatch({ type: "TIMER_RESTART", payload }),
+        timerStart: (payload) => dispatch({ type: "TIMER_START", payload }),
+        timerStop: (payload) => dispatch({ type: "TIMER_STOP", payload }),
+        timerToggle: (payload) => dispatch({ type: "TIMER_TOGGLE", payload }),
+        timerUpdate: (payload) => dispatch({ type: "TIMER_UPDATE", payload }),
+        timerUIToggleEdit: (payload) => dispatch({ type: "TIMER_UI_TOGGLE_EDIT", payload }),
+        timerUIToggleMenu: (payload) => dispatch({ type: "TIMER_UI_TOGGLE_MENU", payload }),
+    })
+)(Timer)

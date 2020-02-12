@@ -3,7 +3,7 @@ class DisplayTimer extends React.Component {
         const { title, timer, toggleMenu } = this.props
 
         return (
-            <div className="p-3">
+            <div className="p-3 w-full">
                 <div className="absolute top-0 right-0 w-8 h-full">
                     <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold p-1 rounded inline-flex items-center h-full"
                         onClick={toggleMenu}>
