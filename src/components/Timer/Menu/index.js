@@ -1,25 +1,23 @@
 class MenuTimer extends React.Component {
     render() {
-        const { toggleMenu, toggleCountdown, toggleEdit, restartCountdown, running } = this.props
-
+        const { timerUIToggleMenu, timerUIToggleEdit, timerReset, timerDelete } = this.props
         return (
             <div className="w-full h-full">
                 <button className="bg-white hover:bg-gray-200 text-gray-800 font-bold rounded overflow-hidden inline-flex items-center h-full w-1/4"
-                    onClick={() => { toggleCountdown(); toggleMenu(); }}>
-                    { !running && <img className="block m-auto" src="/icons/play.svg" /> }
-                    { running && <img className="block m-auto" src="/icons/stop.svg" /> }
+                    onClick={() => { timerUIToggleMenu(); timerReset(); }}>
+                    <img className="block m-auto" src="/icons/restart.svg" alt="Reset"/>
                 </button>
                 <button className="bg-white hover:bg-gray-200 text-gray-800 font-bold rounded overflow-hidden inline-flex items-center h-full w-1/4"
-                    onClick={() => { restartCountdown(); toggleMenu(); }}>
-                    <img className="block m-auto" src="/icons/restart.svg" />
+                    onClick={() => { timerUIToggleMenu(); timerUIToggleEdit(); }}>
+                    <img className="block m-auto" src="/icons/edit.svg" alt="Edit" />
                 </button>
                 <button className="bg-white hover:bg-gray-200 text-gray-800 font-bold rounded overflow-hidden inline-flex items-center h-full w-1/4"
-                    onClick={() => { toggleMenu(); toggleEdit(); }}>
-                    <img className="block m-auto" src="/icons/edit.svg" />
+                    onClick={() => { timerDelete(); }}>
+                    <img className="block m-auto" src="/icons/delete.svg" alt="Delete" />
                 </button>
                 <button className="bg-white hover:bg-gray-200 text-gray-800 font-bold rounded overflow-hidden inline-flex items-center h-full w-1/4"
-                    onClick={() => { toggleMenu(); }}>
-                    <img className="block m-auto" src="/icons/close.svg" />
+                    onClick={() => { timerUIToggleMenu(); }}>
+                    <img className="block m-auto" src="/icons/close.svg" alt="Close" />
                 </button>
             </div>
         )

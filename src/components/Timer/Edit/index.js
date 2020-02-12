@@ -17,7 +17,7 @@ class EditTimer extends React.Component {
 
     submit = (e) => {
         e.preventDefault()
-        this.props.editCountdown(this.state)
+        this.props.timerUpdate(this.state)
     }
 
     render() {
@@ -29,7 +29,7 @@ class EditTimer extends React.Component {
                     <div className="absolute top-0 right-0 w-8 h-full">
                         <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold p-2 rounded inline-flex items-center h-full"
                             type="submit">
-                            <img src="/icons/close.svg" />
+                            <img src="/icons/close.svg" alt="Close" />
                         </button>
                     </div>
                     <div className="w-card-content">
@@ -38,6 +38,7 @@ class EditTimer extends React.Component {
                             type="text"
                             placeholder="Title"
                             value={title}
+                            maxLength={22}
                             onChange={this.changeTitle}
                         />
                         <div className="flex justify-between">

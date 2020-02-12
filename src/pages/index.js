@@ -7,7 +7,7 @@ import Timers from "../components/Timers"
 class Index extends React.Component {
 
     countdown = () => {
-        if (this.props.timers.some((timer) => timer.currentTimer > 0 && timer.running)) {
+        if (this.props.timers.some((timer) => timer.running)) {
             this.props.timerCountdown()
         }
     }

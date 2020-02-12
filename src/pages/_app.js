@@ -2,7 +2,8 @@ import React from "react"
 import { Provider } from "react-redux"
 import App from "next/app"
 import withRedux from "next-redux-wrapper"
-import { makeStore } from "../store"
+import { PersistGate } from "redux-persist/integration/react"
+import makeStore from "../store"
 
 class Cronos extends App {
 
@@ -19,9 +20,11 @@ class Cronos extends App {
         const { Component, pageProps, store } = this.props
         return (
             <Provider store={store}>
-                <Component {...pageProps} />
+                <PersistGate persistor={store.__PERSISTOR} loading={null}>
+                    <Component {...pageProps} />
+                </PersistGate>
             </Provider>
-        );
+        )
     }
 }
 

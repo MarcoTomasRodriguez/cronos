@@ -6,7 +6,7 @@ class AddTimer extends React.Component {
         return (
             <button className="bg-white hover:bg-gray-200 text-gray-800 font-bold h-20 w-full rounded overflow-hidden shadow-lg inline-flex items-center"
                 onClick={timerUICreate}>
-                <img className="block m-auto" src="/icons/add.svg" />
+                <img className="block m-auto" src="/icons/add.svg" alt="Add" />
             </button>
         )
     }

@@ -9,7 +9,8 @@ class Layout extends React.Component {
             <div>
                 <Head>
                     <title>{ title }</title>
-                    <meta name="viewport" content="width=device-width"/>
+                    <meta name="viewport" content="width=device-width" />
+                    <meta name="description" content="You can't work with multiple timers in mind? Try Cronos and forget about them." />
                 </Head>
                 <header className="text-white bg-indigo-600 p-4 text-center">
                     <Link href="/">

@@ -1,4 +1,5 @@
 import { createStore } from "redux"
+import { persistStore } from "redux-persist"
 import { v4 as uuidV4 } from "uuid"
 
 /*
@@ -13,7 +14,7 @@ import { v4 as uuidV4 } from "uuid"
     ]
 */
 
-const initialState = {
+const INITIAL_STATE = {
     timers: []
 }
 
@@ -149,12 +150,17 @@ const countdown = (state, action) => {
     return {
         ...state,
         timers: state.timers.map(
-            timer => ({
-                ...timer, 
-                currentTimer: timer.currentTimer > 0 && timer.running
-                    ? timer.currentTimer - 1
-                    : timer.currentTimer
-            })
+            timer => {
+                if (timer.running) {
+                    if (timer.currentTimer >= 2) {
+                        return { ...timer, currentTimer: timer.currentTimer - 1 }
+                    } else if (timer.currentTimer === 1) {
+                        return { ...timer, currentTimer: timer.currentTimer - 1, running: false }
+                    }
+                } else {
+                    return timer
+                }
+            }
         )
     }
 }
@@ -171,7 +177,19 @@ const restartTimer = (state, action) => {
     }
 }
 
-const reducer = (state = initialState, action) => {
+const resetTimer = (state, action) => {
+    const { id } = action.payload
+    return {
+        ...state,
+        timers: state.timers.map(
+            timer => (timer.id === id) 
+                ? { ...timer, currentTimer: timer.lastTimer, running: false }
+                : timer
+        )
+    }
+}
+
+const reducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case "TIMER_UI_CREATE":
             return timerUICreate(state, action)
@@ -197,10 +215,33 @@ const reducer = (state = initialState, action) => {
             return countdown(state, action)
         case "TIMER_RESTART":
             return restartTimer(state, action)
+        case "TIMER_RESET":
+            return resetTimer(state, action)
         default:
             return state
     }
 }
 
-export const makeStore = (preloadedState = initialState) =>
-    createStore(reducer, preloadedState)
+export default (initialState) => {
+    let store
+    const isClient = typeof window !== 'undefined'
+    if (isClient) {
+        const { persistReducer } = require("redux-persist")
+        const storage = require("redux-persist/lib/storage").default
+        const persistConfig = {
+            key: 'root',
+            storage
+        }
+        store = createStore(
+            persistReducer(persistConfig, reducer),
+            initialState
+        )
+        store.__PERSISTOR = persistStore(store)
+    } else {
+        store = createStore(
+            reducer,
+            initialState
+        )
+    }
+    return store
+}
