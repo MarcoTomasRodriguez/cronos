@@ -1,4 +1,4 @@
-import Head from 'next/head'
+import Head from "next/head"
 import Link from "next/link"
 
 class Layout extends React.Component {
@@ -14,9 +14,9 @@ class Layout extends React.Component {
                 </Head>
                 <header className="text-white bg-indigo-600 p-4 text-center">
                     <Link href="/">
-                        <a className="text-white font-bold">
+                        <h1 className="text-white font-bold">
                             Cronos
-                        </a>
+                        </h1>
                     </Link>
                 </header>
                 { children }

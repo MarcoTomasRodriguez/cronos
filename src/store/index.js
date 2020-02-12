@@ -224,12 +224,12 @@ const reducer = (state = INITIAL_STATE, action) => {
 
 export default (initialState) => {
     let store
-    const isClient = typeof window !== 'undefined'
+    const isClient = typeof window !== "undefined"
     if (isClient) {
         const { persistReducer } = require("redux-persist")
         const storage = require("redux-persist/lib/storage").default
         const persistConfig = {
-            key: 'root',
+            key: "root",
             storage
         }
         store = createStore(

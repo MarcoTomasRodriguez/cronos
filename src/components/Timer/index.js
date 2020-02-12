@@ -33,7 +33,7 @@ class Timer extends React.Component {
 
     getSeconds = (time) => Math.floor(time % 60)
 
-    zeroPad = (number, pad) => String(number).padStart(pad, '0')
+    zeroPad = (number, pad) => String(number).padStart(pad, "0")
 
     isValidStringTime = (time) => true
 
