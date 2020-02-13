@@ -81,6 +81,11 @@ class Timer extends React.Component {
         this.props.timerToggle(timer)
     }
 
+    timerStopRing = () => {
+        const { timer } = this.props
+        this.props.timerStopRing(timer)
+    }
+
     timerDelete = () => {
         const { timer } = this.props
         this.props.timerDelete(timer)
@@ -124,7 +129,9 @@ class Timer extends React.Component {
                             timer={this.stringifyTime(timer.currentTimer)}
                             currentTimer={timer.currentTimer}
                             running={timer.running}
+                            ringing={timer.ringing}
                             timerUIToggleMenu={this.timerUIToggleMenu}
+                            timerStopRing={this.timerStopRing}
                             timerToggle={this.timerToggle}
                             timerReset={this.timerReset}
                         />
@@ -160,6 +167,7 @@ export default connect(
         timerReset: (payload) => dispatch({ type: "TIMER_RESET", payload }),
         timerStart: (payload) => dispatch({ type: "TIMER_START", payload }),
         timerStop: (payload) => dispatch({ type: "TIMER_STOP", payload }),
+        timerStopRing: (payload) => dispatch({ type: "TIMER_STOP_RING", payload }),
         timerToggle: (payload) => dispatch({ type: "TIMER_TOGGLE", payload }),
         timerUpdate: (payload) => dispatch({ type: "TIMER_UPDATE", payload }),
         timerUIToggleEdit: (payload) => dispatch({ type: "TIMER_UI_TOGGLE_EDIT", payload }),

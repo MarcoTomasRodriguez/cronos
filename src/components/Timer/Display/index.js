@@ -1,17 +1,31 @@
 class DisplayTimer extends React.Component {
+
+    clickMainButton = () => {
+        if (this.props.currentTimer !== 0) {
+            this.props.timerToggle()
+        } else if (!this.props.ringing) {
+            this.props.timerReset()
+        } else {
+            this.props.timerStopRing()
+        }
+    }
+
     render() {
-        const { title, timer, running, currentTimer, timerUIToggleMenu, timerToggle, timerReset } = this.props
+        const { title, timer, running, ringing, currentTimer, timerUIToggleMenu } = this.props
 
         return (
             <div className="p-3 w-full">
                 <div className="absolute top-0 right-0 w-8 h-full">
                     <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold p-1 rounded inline-flex items-center h-full"
-                        onClick={() => currentTimer !== 0 ? timerToggle() : timerReset()}>
-                            { !running && currentTimer !== 0 &&
+                        onClick={this.clickMainButton}>
+                            { !running && currentTimer !== 0 && !ringing &&
                                 <img className="block m-auto" src="/icons/play.svg" alt="Start" />
                             }
-                            { !running && currentTimer === 0 &&
+                            { !running && currentTimer === 0 && !ringing &&
                                 <img className="block m-auto" src="/icons/restart.svg" alt="Reset" />
+                            }
+                            { !running && currentTimer === 0 && ringing &&
+                                <img className="block m-auto" src="/icons/done.svg" alt="Done" />
                             }
                             { running && 
                                 <img className="block m-auto" src="/icons/pause.svg" alt="Pause" />
@@ -25,9 +39,16 @@ class DisplayTimer extends React.Component {
                         </div>
                     </div>
                     <div className="p-2">
-                        <div className="uppercase tracking-wide text-lg text-gray-800 font-bold text-center">
-                            { timer }
-                        </div>
+                        { ringing &&
+                            <div className="uppercase tracking-wide text-lg text-red-700 font-bold text-center">
+                                { timer }
+                            </div>
+                        }
+                        { !ringing &&
+                            <div className="uppercase tracking-wide text-lg text-gray-800 font-bold text-center">
+                                { timer }
+                            </div>
+                        }
                     </div>
                 </div>
             </div>

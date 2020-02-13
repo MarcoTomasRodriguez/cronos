@@ -9,6 +9,7 @@ import { v4 as uuidV4 } from "uuid"
         currentTimer: Integer
         lastTimer:    Integer
         running:      Boolean
+        ringing:      Boolean
         menu:         Boolean
         edit:         Boolean
     ]
@@ -21,8 +22,9 @@ const INITIAL_STATE = {
 const generateDefaultTimerProps = () => ({
     id:      uuidV4(),
     running: false,
+    ringing: false,
     menu:    false,
-    edit:    false
+    edit:    false,
 })
 
 const timerUICreate = (state, action) => {
@@ -33,11 +35,12 @@ const timerUICreate = (state, action) => {
             {
                 id:           uuidV4(),
                 running:      false,
+                ringing:      false,
                 menu:         false,
                 edit:         true,
                 title:        "",
                 currentTimer: null,
-                lastTimer:    null
+                lastTimer:    null,
             }
         ]
     }
@@ -153,9 +156,17 @@ const countdown = (state, action) => {
             timer => {
                 if (timer.running) {
                     if (timer.currentTimer >= 2) {
-                        return { ...timer, currentTimer: timer.currentTimer - 1 }
+                        return { 
+                            ...timer, 
+                            currentTimer: timer.currentTimer - 1 
+                        }
                     } else if (timer.currentTimer === 1) {
-                        return { ...timer, currentTimer: timer.currentTimer - 1, running: false }
+                        return { 
+                            ...timer, 
+                            currentTimer: timer.currentTimer - 1, 
+                            running: false, 
+                            ringing: true
+                        }
                     }
                 } else {
                     return timer
@@ -189,6 +200,18 @@ const resetTimer = (state, action) => {
     }
 }
 
+const timerStopRing = (state, action) => {
+    const { id } = action.payload
+    return {
+        ...state,
+        timers: state.timers.map(
+            timer => (timer.id === id) 
+                ? { ...timer, ringing: false }
+                : timer
+        )
+    }
+}
+
 const reducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case "TIMER_UI_CREATE":
@@ -213,6 +236,8 @@ const reducer = (state = INITIAL_STATE, action) => {
             return stopTimer(state, action)
         case "TIMER_COUNTDOWN":
             return countdown(state, action)
+        case "TIMER_STOP_RING":
+            return timerStopRing(state, action)
         case "TIMER_RESTART":
             return restartTimer(state, action)
         case "TIMER_RESET":
