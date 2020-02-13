@@ -1,15 +1,22 @@
 {
   "name": "cronos",
   "version": "1.0.0",
-  "description": "",
+  "description": "You can't work with multiple timers in mind? Try Cronos and forget about them.",
   "scripts": {
     "dev": "next dev --port $PORT",
     "build": "next build",
     "start": "next start --port $PORT"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "timer",
+    "multi-timer",
+    "pwa",
+    "nextjs",
+    "tailwindcss",
+    "accesibility"
+  ],
+  "author": "MarcoTomasRodriguez",
+  "license": "GPLv3",
   "dependencies": {
     "next": "^9.2.1",
     "next-redux-wrapper": "^4.0.1",
