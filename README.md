@@ -1,6 +1,6 @@
 # Cronos
 
-You can't work with multiple timers in mind? Try Cronos and forget about them.
+You can't work with multiple timers in mind? Cronos helps you to create and manage multiple short timers.
 
 ## Getting Started
 
