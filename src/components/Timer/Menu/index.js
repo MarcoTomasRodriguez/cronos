@@ -1,3 +1,8 @@
+import PropTypes from "prop-types"
+
+/**
+ * @description Displays a dynamic menu where the user can edit, reset and delete the timer.
+ */
 class MenuTimer extends React.Component {
     render() {
         const { timerUIToggleMenu, timerUIToggleEdit, timerReset, timerDelete } = this.props
@@ -22,6 +27,13 @@ class MenuTimer extends React.Component {
             </div>
         )
     }
+}
+
+MenuTimer.propTypes = {
+    timerUIToggleMenu: PropTypes.func.isRequired,
+    timerUIToggleEdit: PropTypes.func.isRequired,
+    timerReset: PropTypes.func.isRequired,
+    timerDelete: PropTypes.func.isRequired
 }
 
 export default MenuTimer

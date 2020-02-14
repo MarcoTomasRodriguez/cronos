@@ -1,10 +1,17 @@
+import PropTypes from "prop-types"
+import Timer from "../../../lib/timer"
+
+/**
+ * @description Displays a simple form in which the user can edit the props of the timer. 
+ * If there's no title, the timer is removed.
+ */
 class EditTimer extends React.Component {
 
     state = {
         title: this.props.title,
-        hours: this.props.hours,
-        minutes: this.props.minutes,
-        seconds: this.props.seconds
+        hours: this.props.lastTimer.hours,
+        minutes: this.props.lastTimer.minutes,
+        seconds: this.props.lastTimer.seconds
     }
 
     changeTitle = (e) => this.setState({ title: e.target.value })
@@ -22,7 +29,6 @@ class EditTimer extends React.Component {
 
     render() {
         const { title, hours, minutes, seconds } = this.state
-
         return (
             <div>
                 <form className="p-3 w-full" autoComplete="off" onSubmit={this.submit}>
@@ -75,6 +81,12 @@ class EditTimer extends React.Component {
             </div>
         )
     }
+}
+
+EditTimer.propTypes = {
+    title: PropTypes.string.isRequired,
+    lastTimer: PropTypes.instanceOf(Timer).isRequired,
+    timerUpdate: PropTypes.func.isRequired
 }
 
 export default EditTimer

@@ -1,6 +1,10 @@
+import PropTypes from "prop-types"
 import Timer from "../Timer"
 import AddTimer from "../AddTimer"
 
+/**
+ * @description Displays all the timers in a responsive grid.
+ */
 class Timers extends React.Component {
     render() {
         const { timers } = this.props
@@ -21,6 +25,10 @@ class Timers extends React.Component {
             </div>
         )
     }
+}
+
+Timers.propTypes = {
+    timers: PropTypes.array.isRequired
 }
 
 export default Timers

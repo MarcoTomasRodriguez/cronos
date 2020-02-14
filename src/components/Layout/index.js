@@ -1,10 +1,12 @@
+import PropTypes from "prop-types"
 import Head from "next/head"
-import Link from "next/link"
 
+/**
+ * @description Creates the basic layout for every view and sets some important headers.
+ */
 class Layout extends React.Component {
     render() {
         const { children, title } = this.props
-
         return (
             <div>
                 <Head>
@@ -14,17 +16,19 @@ class Layout extends React.Component {
                 </Head>
                 <div className="min-h-screen bg-gray-300">
                     <header className="text-white bg-indigo-600 p-4 text-center">
-                        <Link href="/">
-                            <h1 className="text-white font-bold">
-                                Cronos
-                            </h1>
-                        </Link>
+                        <h1 className="text-white font-bold cursor-default">
+                            Cronos
+                        </h1>
                     </header>
                     { children }
                 </div>
             </div>
         )
     }
+}
+
+Layout.propTypes = {
+    title: PropTypes.string.isRequired
 }
 
 export default Layout
