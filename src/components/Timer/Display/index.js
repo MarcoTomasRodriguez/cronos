@@ -16,8 +16,16 @@ class DisplayTimer extends React.Component {
         }
     }
 
+    clickDisplay = () => {
+        if (this.props.ringing) {
+            this.props.timerStopRing()
+        } else {
+            this.props.timerUIToggleMenu()
+        }
+    }
+
     render() {
-        const { title, running, ringing, currentTimer, timerUIToggleMenu } = this.props
+        const { title, running, ringing, currentTimer } = this.props
         return (
             <div className="p-3 w-full">
                 <div className="absolute top-0 right-0 w-8 h-full">
@@ -37,7 +45,7 @@ class DisplayTimer extends React.Component {
                             }
                     </button>
                 </div>
-                <div className="w-card-content h-full cursor-pointer" onClick={timerUIToggleMenu}>
+                <div className="w-card-content h-full cursor-pointer" onClick={this.clickDisplay}>
                     <div>
                         <div className="uppercase tracking-wide text-gray-600 font-bold text-xs text-center">
                             { title }

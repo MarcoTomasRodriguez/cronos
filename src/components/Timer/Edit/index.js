@@ -35,7 +35,7 @@ class EditTimer extends React.Component {
                     <div className="absolute top-0 right-0 w-8 h-full">
                         <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold p-2 rounded inline-flex items-center h-full"
                             type="submit">
-                            <img src="/icons/close.svg" alt="Close" />
+                            <img src="/icons/done.svg" alt="Save" />
                         </button>
                     </div>
                     <div className="w-card-content">
