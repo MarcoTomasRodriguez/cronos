@@ -10,9 +10,9 @@ These instructions will get you a copy of the project up and running on your loc
 
 Install the following programs:
 
-* Node.js
-* npm
-* Git
+-   Node.js
+-   npm
+-   Git
 
 ### Installing
 
@@ -40,10 +40,10 @@ npm i
 
 In order to run the app in the development mode, run the following command.
 
-Note: If you want to change the port, replace 3000 with the new port.
+Note: If you want to change the port, simply replace 3000 with another port.
 
 ```bash
-port=3000 npm run dev
+PORT=3000 npm run dev
 ```
 
 ### Production
@@ -59,7 +59,7 @@ Then execute the application with:
 Note: If you want to change the port, replace 80 with the new port.
 
 ```bash
-port=80 npm run dev
+PORT=80 npm start
 ```
 
 ## Deployment
@@ -80,11 +80,11 @@ now
 
 ## Built With
 
-* [Next.js](https://nextjs.org/) - Web framework
-* [React.js](https://reactjs.org/) - Used alongside with Next.js
-* [Redux](https://redux.js.org/) - State management system
-* [TailwindCSS](https://tailwindcss.com/) - A utility-first CSS framework for rapidly building custom designs.
-* [npm](https://www.npmjs.com/) - Dependency Management
+-   [Next.js](https://nextjs.org/) - Web framework
+-   [React.js](https://reactjs.org/) - Used alongside with Next.js
+-   [Redux](https://redux.js.org/) - State management system
+-   [TailwindCSS](https://tailwindcss.com/) - A utility-first CSS framework for rapidly building custom designs.
+-   [npm](https://www.npmjs.com/) - Dependency Management
 
 ## License
 
