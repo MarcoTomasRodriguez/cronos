@@ -1,64 +1,49 @@
-import React from "react";
-import { connect } from "react-redux";
-import { bindActionCreators, Dispatch } from "redux";
-import Layout from "../components/Layout";
-import Timers from "../components/Timers";
-import { countdownTimer } from "../store/actions";
-import { Actions, Timer, State } from "../store/types";
+import { useEffect, useRef } from "react";
+import { interval } from "rxjs";
+import Layout from "@components/Layout";
+import Timers from "@components/Timers";
+import { TimerStatus } from "@typeDefs/timer";
+import { useAppDispatch, useAppSelector } from "@hooks/redux";
+import { countdownTimers } from "@store/slices/timerSlice";
 
-const APP_NAME = "Cronos";
+const Index = () => {
+  const dispatch = useAppDispatch();
+  const { timers, ringing, running } = useAppSelector((state) => state.timer);
 
-interface Props extends Pick<Actions, "countdownTimer"> {
-    timers: Timer[];
-}
+  const ring = useRef(new Audio("/effects/ring.mp3"));
 
-class Index extends React.Component<Props> {
-    countdownInterval: NodeJS.Timeout = null;
+  useEffect(() => {
+    const subscription = interval(1000).pipe().subscribe({ next: countdown });
 
-    ring: HTMLAudioElement = new Audio("/effects/ring.mp3");
+    ring.current.preload = "auto";
+    ring.current.loop = false;
+    ring.current.volume = 0;
 
-    playRing = (): void => {
-        this.ring.volume = 1;
-        this.ring.play();
-    };
+    return () => subscription.unsubscribe();
+  }, []);
 
-    countdown = () => {
-        // If some timer is currently running, countdown every active timer.
-        if (this.props.timers.some((timer) => timer.timerState === "RUNNING")) {
-            this.props.countdownTimer();
-        }
-        // If some timer is currently ringing, reproduce continuously the ring till the user cancels every bell.
-        if (this.props.timers.some((timer) => timer.timerState === "RINGING")) {
-            this.playRing();
-        }
-    };
+  const countdown = () => {
+    console.log("Countdown");
 
-    componentDidMount() {
-        // Initialize the ring audio
-        this.ring.preload = "0";
-        this.ring.loop = false;
-        this.ring.volume = 0;
-        // For every second execute both ring and countdown statements.
-        this.countdownInterval = setInterval(this.countdown, 1000);
+    // If some timer is currently running, countdown every active timer.
+    if (running.length > 0) {
+      console.log("Some is running");
+      dispatch(countdownTimers());
     }
 
-    componentWillUnmount() {
-        // Clears the ring and countdown interval.
-        clearInterval(this.countdownInterval);
+    // If some timer is currently ringing, reproduce continuously the ring till the user cancels every bell.
+    if (ringing.length > 0) {
+      console.log("Some is ringing");
+      ring.current.volume = 1;
+      ring.current.play();
     }
+  };
 
-    render() {
-        return (
-            <Layout title={APP_NAME}>
-                <Timers timers={this.props.timers} />
-            </Layout>
-        );
-    }
-}
+  return (
+    <Layout title="Cronos">
+      <Timers timers={timers} />
+    </Layout>
+  );
+};
 
-export default connect(
-    (state: State) => state,
-    (dispatch: Dispatch) => ({
-        ...bindActionCreators({ countdownTimer }, dispatch),
-    })
-)(Index);
+export default Index;

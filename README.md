@@ -10,9 +10,9 @@ These instructions will get you a copy of the project up and running on your loc
 
 Install the following programs:
 
--   Node.js
--   npm
--   Git
+- Node.js
+- npm
+- Git
 
 ### Installing
 
@@ -80,12 +80,8 @@ now
 
 ## Built With
 
--   [Next.js](https://nextjs.org/) - Web framework
--   [React.js](https://reactjs.org/) - Used alongside with Next.js
--   [Redux](https://redux.js.org/) - State management system
--   [TailwindCSS](https://tailwindcss.com/) - A utility-first CSS framework for rapidly building custom designs.
--   [npm](https://www.npmjs.com/) - Dependency Management
-
-## License
-
-This project is licensed under the GNU GPLv3 License - see the [LICENSE.md](LICENSE.md) file for details
+- [Next.js](https://nextjs.org/) - Web framework
+- [React.js](https://reactjs.org/) - Used alongside with Next.js
+- [Redux](https://redux.js.org/) - State management system
+- [TailwindCSS](https://tailwindcss.com/) - A utility-first CSS framework for rapidly building custom designs.
+- [npm](https://www.npmjs.com/) - Dependency Management

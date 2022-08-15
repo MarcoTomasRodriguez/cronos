@@ -1,29 +1,28 @@
-import React from "react";
-import { Timer } from "../../store/types";
-import DisplayTimer from "./Display";
-import MenuTimer from "./Menu";
-import EditTimer from "./Edit";
+import { Timer as TimerT, TimerMode } from "@typeDefs/timer";
+import TimerDisplay from "./TimerDisplay";
+import TimerMenu from "./TimerMenu";
+import TimerEdit from "./TimerEdit";
 
-interface Props {
-    timer: Timer;
-}
+type TimerProps = {
+  id: string;
+  timer: TimerT;
+};
 
 /**
  * Handle the different views and actions inside a Timer.
  */
-export default class extends React.Component<Props> {
-    render() {
-        const { timer } = this.props;
-        return (
-            <div className="bg-gray-100 h-20 rounded overflow-hidden shadow-lg">
-                <div className="h-full relative">
-                    {timer.uiState === "DISPLAY" && (
-                        <DisplayTimer timer={timer} />
-                    )}
-                    {timer.uiState === "MENU" && <MenuTimer timer={timer} />}
-                    {timer.uiState === "EDIT" && <EditTimer timer={timer} />}
-                </div>
-            </div>
-        );
-    }
-}
+const Timer = ({ id, timer }: TimerProps) => {
+  return (
+    <div className="bg-gray-100 h-20 rounded overflow-hidden shadow-lg">
+      <div className="h-full relative">
+        {timer.mode == TimerMode.DISPLAY && (
+          <TimerDisplay id={id} timer={timer} />
+        )}
+        {timer.mode == TimerMode.MENU && <TimerMenu id={id} timer={timer} />}
+        {timer.mode == TimerMode.EDIT && <TimerEdit id={id} timer={timer} />}
+      </div>
+    </div>
+  );
+};
+
+export default Timer;
